@@ -1,21 +1,35 @@
-export function Header({
-  teamName1,
-  teamName2,
-  onAddScoreTeam1
-}: {
-  teamName1: string
-  teamName2: string
-  onAddScoreTeam1: (score: number) => void
-}) {
+import { useNewScore } from '../hooks/useNewScore'
+import { useTeams } from '../hooks/useTeams'
+
+export function Header() {
+  const { teams } = useTeams()
   return (
     <header className='flex justify-around pt-10 sticky top-0 bg-slate-500 '>
-      <h1
-        onClick={() => onAddScoreTeam1(10)}
-        className='text-xl font-bold'
-      >
-        {teamName1}
-      </h1>
-      <h1 className='text-xl font-bold'>{teamName2}</h1>
+      <Name
+        teamIndex={0}
+        label={teams.team1.name}
+      />
+      <Name
+        teamIndex={1}
+        label={teams.team2.name}
+      />
     </header>
+  )
+}
+
+function Name({ label, teamIndex }: { label: string; teamIndex: 0 | 1 }) {
+  const { setShow, setTeamIndex } = useNewScore()
+  function handleButtonClick(index: 0 | 1) {
+    setTeamIndex(index)
+    setShow(true)
+  }
+
+  return (
+    <h1
+      onClick={() => handleButtonClick(teamIndex)}
+      className='text-xl font-bold cursor-pointer'
+    >
+      {label}
+    </h1>
   )
 }
