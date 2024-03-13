@@ -17,6 +17,7 @@ export function Header() {
         <Button
           onClick={handleEndGame}
           variant='destructive'
+          size='sm'
         >
           Finalizar juego?
         </Button>
@@ -38,9 +39,10 @@ export function Header() {
 
 function Name({ label, teamIndex }: { label: string; teamIndex: TeamsKeys }) {
   const { showNewScoreModal } = useModals()
-  const { setTeamToAddScore } = useTeams()
+  const { setTeamToUpdate, gameEnded } = useTeams()
   function handleButtonClick() {
-    setTeamToAddScore(teamIndex)
+    if (gameEnded) return
+    setTeamToUpdate(teamIndex)
     showNewScoreModal()
   }
 
