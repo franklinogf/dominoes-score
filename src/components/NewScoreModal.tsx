@@ -1,28 +1,21 @@
 import { useState } from 'react'
 import { cn } from '../libs/utils'
-import { useTeams } from '../hooks/useTeams'
-import { useNewScore } from '../hooks/useNewScore'
+
 import { Button } from './ui/Button'
+import { useModals } from '../hooks/useModals'
+import { useTeams } from '../hooks/useTeams'
 
 export function NewScoreModal() {
-  const { teams, setTeams } = useTeams()
+  const { addScore } = useTeams()
   const [score, setScore] = useState('')
-  const { show, setShow, teamIndex } = useNewScore()
+  const { newScoreModal, hideNewScoreModal } = useModals()
 
   function handleButtonClick() {
-    setTeams((prevTeams) => {
-      const team = { ...prevTeams[teamIndex] }
-      team.scores = [...team.scores, Number(score)]
-
-      return {
-        ...prevTeams,
-        [teamIndex]: team
-      }
-    })
+    addScore(Number(score))
     handleButtonCancel()
   }
   function handleButtonCancel() {
-    setShow(false)
+    hideNewScoreModal()
     setScore('')
   }
   return (
@@ -31,7 +24,7 @@ export function NewScoreModal() {
       tabIndex={-1}
       className={cn(
         'overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full',
-        { flex: show, hidden: !show }
+        { flex: newScoreModal, hidden: !newScoreModal }
       )}
     >
       <div className='relative p-4 w-full max-w-md max-h-full'>
@@ -52,7 +45,7 @@ export function NewScoreModal() {
                 htmlFor='small_standard'
                 className='start-0 absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 '
               >
-                {teams[teamIndex].name}
+                {/* {teams[teamIndex].name} */}
               </label>
             </div>
             <Button onClick={handleButtonClick}>Continuar</Button>

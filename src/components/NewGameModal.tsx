@@ -2,24 +2,17 @@ import { useState } from 'react'
 import { cn } from '../libs/utils'
 import { useTeams } from '../hooks/useTeams'
 import { Button } from './ui/Button'
+import { useModals } from '../hooks/useModals'
 
-export function NewGameModal({ show, setShow }) {
-  const { setTeams } = useTeams()
+export function NewGameModal() {
+  const { startGame } = useTeams()
+  const { newGameModal, hideNewGameModal } = useModals()
   const [team1Name, setTeam1Name] = useState('')
   const [team2Name, setTeam2Name] = useState('')
 
   function handleButtonClick() {
-    setShow(false)
-    setTeams({
-      team1: {
-        name: team1Name,
-        scores: []
-      },
-      team2: {
-        name: team2Name,
-        scores: []
-      }
-    })
+    startGame(team1Name, team2Name)
+    hideNewGameModal()
   }
   return (
     <div
@@ -27,7 +20,7 @@ export function NewGameModal({ show, setShow }) {
       tabIndex={-1}
       className={cn(
         'overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full',
-        { flex: show, hidden: !show }
+        { flex: newGameModal, hidden: !newGameModal }
       )}
     >
       <div className='relative p-4 w-full max-w-md max-h-full'>

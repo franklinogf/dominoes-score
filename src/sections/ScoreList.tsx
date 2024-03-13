@@ -1,11 +1,11 @@
 import { useTeams } from '../hooks/useTeams'
 
 export function ScoreList() {
-  const { teams } = useTeams()
+  const { team1, team2 } = useTeams()
   return (
     <section className='grid grid-cols-2 mt-4 divide-x-2'>
-      <List scoreList={teams.team1.scores} />
-      <List scoreList={teams.team2.scores} />
+      <List scoreList={team1.scores} />
+      <List scoreList={team2.scores} />
     </section>
   )
 }
