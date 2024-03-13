@@ -32,7 +32,7 @@ export function NewScoreModal() {
           <div className='px-4 py-8 md:p-5 text-center space-y-8'>
             <div className='relative z-0'>
               <input
-                type='text'
+                type='number'
                 id='small_standard'
                 className='block w-full px-0 py-2 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
                 placeholder=''
@@ -48,8 +48,21 @@ export function NewScoreModal() {
                 {/* {teams[teamIndex].name} */}
               </label>
             </div>
-            <Button onClick={handleButtonClick}>Continuar</Button>
-            <Button onClick={handleButtonCancel}>Cancelar</Button>
+            <div className='space-x-5'>
+              <Button
+                size='sm'
+                onClick={handleButtonClick}
+              >
+                Agregar
+              </Button>
+              <Button
+                size='sm'
+                variant='destructive'
+                onClick={handleButtonCancel}
+              >
+                Cancelar
+              </Button>
+            </div>
           </div>
         </div>
       </div>
