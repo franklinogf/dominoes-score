@@ -1,3 +1,4 @@
+import { Button } from '../components/ui/Button'
 import { useNewScore } from '../hooks/useNewScore'
 import { useTeams } from '../hooks/useTeams'
 import { TeamsKeys } from '../types/teams'
