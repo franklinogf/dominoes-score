@@ -12,13 +12,12 @@ export function NewScoreModal() {
   function handleButtonClick() {
     setShow(false)
     setTeams((prevTeams) => {
-      const teams = Object.values(prevTeams)
-      const teamsName = Object.keys(prevTeams)
-      const newScores = [...teams[teamIndex].scores, Number(score)]
+      const team = { ...prevTeams[teamIndex] }
+      team.scores = [...team.scores, Number(score)]
 
       return {
         ...prevTeams,
-        [teamsName[teamIndex]]: { name: teams[teamIndex].name, scores: newScores }
+        [teamIndex]: team
       }
     })
     setScore('')
@@ -54,7 +53,7 @@ export function NewScoreModal() {
                 htmlFor='small_standard'
                 className='start-0 absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 '
               >
-                {teams['team' + (teamIndex + 1)].name}
+                {teams[teamIndex].name}
               </label>
             </div>
             <Button onClick={handleButtonClick}>Continuar</Button>
