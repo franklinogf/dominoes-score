@@ -5,15 +5,23 @@ import { NewGameModal } from './components/NewGameModal'
 import { TeamsProvider } from './contexts/teams'
 import { NewScoreModal } from './components/NewScoreModal'
 import { NewScoreModalProvider } from './contexts/newScore'
+import { useState } from 'react'
 
 export default function App() {
+  const [showModal, setShowModal] = useState(true)
   return (
     <TeamsProvider>
-      <NewGameModal />
+      <NewGameModal
+        show={showModal}
+        setShow={setShowModal}
+      />
       <NewScoreModalProvider>
         <NewScoreModal />
         <main className='min-h-dvh bg-slate-500 flex flex-col px-0.5'>
-          <Header />
+          <Header
+            show={showModal}
+            setShow={setShowModal}
+          />
           <ScoreList />
           <ScoreTotal />
         </main>

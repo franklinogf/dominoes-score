@@ -3,18 +3,44 @@ import { useNewScore } from '../hooks/useNewScore'
 import { useTeams } from '../hooks/useTeams'
 import { TeamsKeys } from '../types/teams'
 
-export function Header() {
-  const { teams } = useTeams()
+export function Header({ show, setShow }) {
+  const { teams, setTeams } = useTeams()
+
+  function handleEndGame() {
+    setTeams({
+      team1: {
+        name: '',
+        scores: []
+      },
+      team2: {
+        name: '',
+        scores: []
+      }
+    })
+    setShow(true)
+  }
   return (
-    <header className='flex justify-around pt-10 sticky top-0 bg-slate-500 '>
-      <Name
-        teamIndex='team1'
-        label={teams.team1.name}
-      />
-      <Name
-        teamIndex='team2'
-        label={teams.team2.name}
-      />
+    <header className='pt-5 sticky top-0 bg-slate-500'>
+      {!show && (
+        <div className='text-center mb-5'>
+          <Button
+            onClick={handleEndGame}
+            variant='destructive'
+          >
+            Finalizar juego?
+          </Button>
+        </div>
+      )}
+      <div className='flex justify-around'>
+        <Name
+          teamIndex='team1'
+          label={teams.team1.name}
+        />
+        <Name
+          teamIndex='team2'
+          label={teams.team2.name}
+        />
+      </div>
     </header>
   )
 }
