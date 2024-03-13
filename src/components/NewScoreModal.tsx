@@ -5,7 +5,7 @@ import { useNewScore } from '../hooks/useNewScore'
 import { Button } from './ui/Button'
 
 export function NewScoreModal() {
-  const { setTeams } = useTeams()
+  const { teams, setTeams } = useTeams()
   const [score, setScore] = useState('')
   const { show, setShow, teamIndex } = useNewScore()
 
@@ -15,13 +15,16 @@ export function NewScoreModal() {
       const teams = Object.values(prevTeams)
       const teamsName = Object.keys(prevTeams)
       const newScores = [...teams[teamIndex].scores, Number(score)]
-      console.log(teams)
 
       return {
         ...prevTeams,
         [teamsName[teamIndex]]: { name: teams[teamIndex].name, scores: newScores }
       }
     })
+    setScore('')
+  }
+  function handleButtonCancel() {
+    setShow(false)
     setScore('')
   }
   return (
@@ -51,10 +54,11 @@ export function NewScoreModal() {
                 htmlFor='small_standard'
                 className='start-0 absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 '
               >
-                Team 1
+                {teams['team' + (teamIndex + 1)].name}
               </label>
             </div>
             <Button onClick={handleButtonClick}>Continuar</Button>
+            <Button onClick={handleButtonCancel}>Cancelar</Button>
           </div>
         </div>
       </div>
