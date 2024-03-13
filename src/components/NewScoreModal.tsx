@@ -10,7 +10,6 @@ export function NewScoreModal() {
   const { show, setShow, teamIndex } = useNewScore()
 
   function handleButtonClick() {
-    setShow(false)
     setTeams((prevTeams) => {
       const team = { ...prevTeams[teamIndex] }
       team.scores = [...team.scores, Number(score)]
@@ -20,7 +19,7 @@ export function NewScoreModal() {
         [teamIndex]: team
       }
     })
-    setScore('')
+    handleButtonCancel()
   }
   function handleButtonCancel() {
     setShow(false)
