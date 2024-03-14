@@ -6,17 +6,26 @@ import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 
 export function NewScoreModal() {
-  const { addScore } = useTeams()
+  const { addScore, scoreIndexToUpdate, editScore, setScoreIndexToUpdate, deleteScore } = useTeams()
   const [score, setScore] = useState('')
   const { newScoreModal, hideNewScoreModal } = useModals()
 
   function handleButtonClick() {
-    addScore(Number(score))
+    if (scoreIndexToUpdate !== undefined) {
+      editScore(Number(score))
+    } else {
+      addScore(Number(score))
+    }
     handleButtonCancel()
   }
   function handleButtonCancel() {
     hideNewScoreModal()
     setScore('')
+    setScoreIndexToUpdate(undefined)
+  }
+  function handleDelete() {
+    deleteScore()
+    handleButtonCancel()
   }
   return (
     <div
@@ -31,6 +40,11 @@ export function NewScoreModal() {
         <div className='relative bg-white rounded-lg shadow '>
           <div className='px-4 py-8 md:p-5 text-center space-y-8'>
             <div className='relative z-0'>
+              <h1>
+                {scoreIndexToUpdate === undefined
+                  ? 'Agregar nueva puntuación'
+                  : 'Editar puntuación'}
+              </h1>
               <input
                 type='number'
                 id='small_standard'
@@ -41,23 +55,26 @@ export function NewScoreModal() {
                   setScore(e.target.value)
                 }}
               />
-              <label
-                htmlFor='small_standard'
-                className='start-0 absolute text-sm text-gray-500  duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:start-0 peer-focus:text-blue-600  peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6 '
-              >
-                {/* {teams[teamIndex].name} */}
-              </label>
             </div>
             <div className='space-x-5'>
               <Button
                 size='sm'
                 onClick={handleButtonClick}
               >
-                Agregar
+                {scoreIndexToUpdate === undefined ? 'Agregar' : 'Editar'}
               </Button>
+              {scoreIndexToUpdate !== undefined && (
+                <Button
+                  size='sm'
+                  variant='destructive'
+                  onClick={handleDelete}
+                >
+                  Borrar
+                </Button>
+              )}
               <Button
                 size='sm'
-                variant='destructive'
+                variant='secondary'
                 onClick={handleButtonCancel}
               >
                 Cancelar

@@ -47,11 +47,11 @@ function Name({ label, teamIndex }: { label: string; teamIndex: TeamsKeys }) {
   }
 
   return (
-    <h1
+    <button
       onClick={handleButtonClick}
       className='text-xl font-bold cursor-pointer'
     >
       {label}
-    </h1>
+    </button>
   )
 }
