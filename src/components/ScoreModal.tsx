@@ -16,10 +16,10 @@ import {
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 
-export function NewScoreModal() {
+export function ScoreModal() {
   const { addScore, scoreIndexToUpdate, editScore, setScoreIndexToUpdate, deleteScore, limit } =
     useTeams()
-  const { newScoreModal, hideNewScoreModal } = useModals()
+  const { newScoreModal, hideScoreModal } = useModals()
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -35,7 +35,7 @@ export function NewScoreModal() {
     handleButtonCancel()
   }
   function handleButtonCancel() {
-    hideNewScoreModal()
+    hideScoreModal()
     setScoreIndexToUpdate(undefined)
   }
   function handleDelete() {

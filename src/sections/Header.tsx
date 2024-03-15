@@ -38,12 +38,12 @@ export function Header() {
 }
 
 function Name({ label, teamIndex }: { label: string; teamIndex: TeamsKeys }) {
-  const { showNewScoreModal } = useModals()
+  const { showScoreModal } = useModals()
   const { setTeamToUpdate, gameEnded } = useTeams()
   function handleButtonClick() {
     if (gameEnded) return
     setTeamToUpdate(teamIndex)
-    showNewScoreModal()
+    showScoreModal()
   }
 
   return (

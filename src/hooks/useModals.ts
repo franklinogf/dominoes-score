@@ -3,8 +3,8 @@ import { create } from 'zustand'
 interface ModalStore {
   newScoreModal: boolean
   newGameModal: boolean
-  showNewScoreModal: () => void
-  hideNewScoreModal: () => void
+  showScoreModal: () => void
+  hideScoreModal: () => void
   showNewGameModal: () => void
   hideNewGameModal: () => void
 }
@@ -13,11 +13,11 @@ export const useModals = create<ModalStore>((set) => {
   return {
     newScoreModal: false,
     newGameModal: true,
-    showNewScoreModal: () =>
+    showScoreModal: () =>
       set(() => ({
         newScoreModal: true
       })),
-    hideNewScoreModal: () =>
+    hideScoreModal: () =>
       set(() => ({
         newScoreModal: false
       })),
