@@ -8,8 +8,8 @@ export function Header() {
   const { team1, team2 } = useTeams()
 
   return (
-    <header className='pt-5 sticky top-0 bg-slate-500/90'>
-      <div className='text-center mb-5'>
+    <header className='pt-2 sticky top-0 bg-slate-500/90'>
+      <div className='text-center mb-1'>
         <EndGameButton />
       </div>
       <div className='flex justify-around'>
