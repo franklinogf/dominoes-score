@@ -1,8 +1,8 @@
 import { useState } from 'react'
 import { cn } from '../libs/utils'
 import { useTeams } from '../hooks/useTeams'
-import { Button } from './ui/Button'
 import { useModals } from '../hooks/useModals'
+import { Button } from '@chakra-ui/react'
 
 export function NewGameModal() {
   const { startGame } = useTeams()
@@ -62,7 +62,12 @@ export function NewGameModal() {
                 Team 2
               </label>
             </div>
-            <Button onClick={handleButtonClick}>Continuar</Button>
+            <Button
+              colorScheme='blue'
+              onClick={handleButtonClick}
+            >
+              Continuar
+            </Button>
           </div>
         </div>
       </div>

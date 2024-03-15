@@ -1,7 +1,7 @@
-import { Button } from '../components/ui/Button'
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 import { TeamsKeys } from '../types/teams'
+import { Button } from '@chakra-ui/react'
 
 export function Header() {
   const { team1, team2, endGame } = useTeams()
@@ -15,9 +15,9 @@ export function Header() {
     <header className='pt-5 sticky top-0 bg-slate-500/90'>
       <div className='text-center mb-5'>
         <Button
+          colorScheme='red'
           onClick={handleEndGame}
-          variant='destructive'
-          size='sm'
+          size='xs'
         >
           Finalizar juego?
         </Button>
@@ -47,11 +47,11 @@ function Name({ label, teamIndex }: { label: string; teamIndex: TeamsKeys }) {
   }
 
   return (
-    <button
+    <Button
+      variant='ghost'
       onClick={handleButtonClick}
-      className='text-xl font-bold cursor-pointer'
     >
       {label}
-    </button>
+    </Button>
   )
 }

@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { cn } from '../libs/utils'
-
-import { Button } from './ui/Button'
+import { Button, ButtonGroup } from '@chakra-ui/react'
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 
@@ -56,8 +55,9 @@ export function NewScoreModal() {
                 }}
               />
             </div>
-            <div className='space-x-5'>
+            <ButtonGroup gap={3}>
               <Button
+                colorScheme='blue'
                 size='sm'
                 onClick={handleButtonClick}
               >
@@ -65,21 +65,21 @@ export function NewScoreModal() {
               </Button>
               {scoreIndexToUpdate !== undefined && (
                 <Button
+                  colorScheme='red'
                   size='sm'
-                  variant='destructive'
                   onClick={handleDelete}
                 >
                   Borrar
                 </Button>
               )}
               <Button
+                colorScheme='gray'
                 size='sm'
-                variant='secondary'
                 onClick={handleButtonCancel}
               >
                 Cancelar
               </Button>
-            </div>
+            </ButtonGroup>
           </div>
         </div>
       </div>
