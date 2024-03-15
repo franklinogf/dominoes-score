@@ -1,11 +1,17 @@
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 import { TeamsKeys } from '../types/teams'
+import { Box, Button, Grid, GridItem, VStack } from '@chakra-ui/react'
 
 export function ScoreList() {
   const { team1, team2 } = useTeams()
   return (
-    <section className='grid grid-cols-2 mt-4 divide-x-2'>
+    <Grid
+      as='section'
+      templateColumns='repeat(2,1fr)'
+      className='divide-x'
+      gap={0}
+    >
       <List
         scoreList={team1.scores}
         team='team1'
@@ -14,7 +20,7 @@ export function ScoreList() {
         scoreList={team2.scores}
         team='team2'
       />
-    </section>
+    </Grid>
   )
 }
 
@@ -28,18 +34,30 @@ function List({ scoreList, team }: { scoreList: number[]; team: TeamsKeys }) {
   }
 
   return (
-    <article className='flex flex-col text-center divide-y-2 divide-slate-400/50 px-2'>
-      {scoreList.map((score, index) => {
-        return (
-          <button
-            key={team + index}
-            onClick={() => handleEdit(index)}
-            className='font-semibold text-lg text-white py-0.5 cursor-pointer hover:bg-slate-700/80  flex-1'
-          >
-            {score}
-          </button>
-        )
-      })}
-    </article>
+    <GridItem as='article'>
+      <VStack
+        className='divide-y'
+        gap={0}
+      >
+        {scoreList.map((score, index) => {
+          return (
+            <Box
+              w='100%'
+              p={2}
+            >
+              <Button
+                size={'sm'}
+                w='100%'
+                variant='ghost'
+                key={team + index}
+                onClick={() => handleEdit(index)}
+              >
+                {score}
+              </Button>
+            </Box>
+          )
+        })}
+      </VStack>
+    </GridItem>
   )
 }
