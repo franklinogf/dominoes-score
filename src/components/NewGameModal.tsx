@@ -22,7 +22,8 @@ export function NewGameModal() {
   const [team1Name, setTeam1Name] = useState('')
   const [team2Name, setTeam2Name] = useState('')
 
-  function handleButtonClick() {
+  function handleSubmit(e: React.FormEvent) {
+    e.preventDefault()
     if (team1Name === '' || team2Name === '') return
     startGame(team1Name, team2Name)
     hideNewGameModal()
@@ -37,57 +38,61 @@ export function NewGameModal() {
       <ModalOverlay />
       <ModalContent>
         <ModalHeader textAlign='center'>Nombres de los equipos.</ModalHeader>
-        <ModalBody>
-          <Stack>
-            <InputGroup>
-              <Input
-                textAlign='center'
-                placeholder='Equipo 1'
-                value={team1Name}
-                onChange={(e) => {
-                  setTeam1Name(e.target.value)
-                }}
-              />
-              <InputRightElement>
-                <IconButton
-                  variant='ghost'
-                  fontSize='20px'
-                  aria-label='Limpiar el nombre del equipo 1'
-                  icon={<RestartIcon />}
-                  onClick={() => setTeam1Name('')}
+        <form onSubmit={handleSubmit}>
+          <ModalBody>
+            <Stack>
+              <InputGroup>
+                <Input
+                  variant='filled'
+                  textAlign='center'
+                  placeholder='Equipo 1'
+                  value={team1Name}
+                  onChange={(e) => {
+                    setTeam1Name(e.target.value)
+                  }}
                 />
-              </InputRightElement>
-            </InputGroup>
-            <InputGroup>
-              <Input
-                textAlign='center'
-                placeholder='Equipo 2'
-                value={team2Name}
-                onChange={(e) => {
-                  setTeam2Name(e.target.value)
-                }}
-              />
-              <InputRightElement>
-                <IconButton
-                  variant='ghost'
-                  fontSize='20px'
-                  aria-label='Limpiar el nombre del equipo 2'
-                  icon={<RestartIcon />}
-                  onClick={() => setTeam2Name('')}
+                <InputRightElement>
+                  <IconButton
+                    variant='ghost'
+                    fontSize='20px'
+                    aria-label='Limpiar el nombre del equipo 1'
+                    icon={<RestartIcon />}
+                    onClick={() => setTeam1Name('')}
+                  />
+                </InputRightElement>
+              </InputGroup>
+              <InputGroup>
+                <Input
+                  variant='filled'
+                  textAlign='center'
+                  placeholder='Equipo 2'
+                  value={team2Name}
+                  onChange={(e) => {
+                    setTeam2Name(e.target.value)
+                  }}
                 />
-              </InputRightElement>
-            </InputGroup>
-          </Stack>
-        </ModalBody>
-        <ModalFooter className='!justify-center'>
-          <Button
-            size='sm'
-            colorScheme='blue'
-            onClick={handleButtonClick}
-          >
-            Continuar
-          </Button>
-        </ModalFooter>
+                <InputRightElement>
+                  <IconButton
+                    variant='ghost'
+                    fontSize='20px'
+                    aria-label='Limpiar el nombre del equipo 2'
+                    icon={<RestartIcon />}
+                    onClick={() => setTeam2Name('')}
+                  />
+                </InputRightElement>
+              </InputGroup>
+            </Stack>
+          </ModalBody>
+          <ModalFooter className='!justify-center'>
+            <Button
+              size='sm'
+              colorScheme='blue'
+              type='submit'
+            >
+              Continuar
+            </Button>
+          </ModalFooter>
+        </form>
       </ModalContent>
     </Modal>
   )
