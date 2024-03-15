@@ -26,11 +26,11 @@ export function ScoreList() {
 
 function List({ scoreList, team }: { scoreList: number[]; team: TeamsKeys }) {
   const { setScoreIndexToUpdate, setTeamToUpdate } = useTeams()
-  const { showScoreModal } = useModals()
+  const { scoreModalToggle } = useModals()
   function handleEdit(index: number) {
     setScoreIndexToUpdate(index)
     setTeamToUpdate(team)
-    showScoreModal()
+    scoreModalToggle(true)
   }
 
   return (
