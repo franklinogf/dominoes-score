@@ -1,11 +1,28 @@
 import { useState } from 'react'
 import { cn } from '../libs/utils'
-import { Button, ButtonGroup } from '@chakra-ui/react'
+import {
+  Modal,
+  ModalOverlay,
+  ModalContent,
+  ModalHeader,
+  ModalFooter,
+  ModalBody,
+  ModalCloseButton,
+  Button,
+  ButtonGroup,
+  Input
+} from '@chakra-ui/react'
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 
 export function NewScoreModal() {
-  const { addScore, scoreIndexToUpdate, editScore, setScoreIndexToUpdate, deleteScore } = useTeams()
+  const {
+    addScore,
+    scoreIndexToUpdate,
+    editScore,
+    setScoreIndexToUpdate,
+    deleteScore
+  } = useTeams()
   const [score, setScore] = useState('')
   const { newScoreModal, hideNewScoreModal } = useModals()
 
@@ -35,26 +52,25 @@ export function NewScoreModal() {
         { flex: newScoreModal, hidden: !newScoreModal }
       )}
     >
-      <div className='relative p-4 w-full max-w-md max-h-full'>
-        <div className='relative bg-white rounded-lg shadow '>
-          <div className='px-4 py-8 md:p-5 text-center space-y-8'>
-            <div className='relative z-0'>
-              <h1>
-                {scoreIndexToUpdate === undefined
-                  ? 'Agregar nueva puntuación'
-                  : 'Editar puntuación'}
-              </h1>
-              <input
-                type='number'
-                id='small_standard'
-                className='block w-full px-0 py-2 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
-                placeholder=''
-                value={score}
-                onChange={(e) => {
-                  setScore(e.target.value)
-                }}
-              />
-            </div>
+      <Modal>
+        <ModalOverlay />
+        <ModalContent>
+          <ModalHeader>
+            {scoreIndexToUpdate === undefined
+              ? 'Agregar nueva puntuación'
+              : 'Editar puntuación'}
+          </ModalHeader>
+          <ModalBody>
+            <Input
+              type='number'
+              id='small_standard'
+              className='block w-full px-0 py-2 text-sm text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none focus:outline-none focus:ring-0 focus:border-blue-600 peer'
+              placeholder=''
+              value={score}
+              onChange={(e) => {
+                setScore(e.target.value)
+              }}
+            />
             <ButtonGroup gap={3}>
               <Button
                 colorScheme='blue'
@@ -80,6 +96,14 @@ export function NewScoreModal() {
                 Cancelar
               </Button>
             </ButtonGroup>
+          </ModalBody>
+          <Button variant='ghost'>Secondary Action</Button>
+        </ModalContent>
+      </Modal>
+      <div className='relative p-4 w-full max-w-md max-h-full'>
+        <div className='relative bg-white rounded-lg shadow '>
+          <div className='px-4 py-8 md:p-5 text-center space-y-8'>
+            <div className='relative z-0'></div>
           </div>
         </div>
       </div>
