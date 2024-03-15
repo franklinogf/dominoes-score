@@ -20,7 +20,7 @@ export const useModals = create<ModalStore>((set) => {
         }
         return { newGameModal: show }
       }),
-    scoreModalToggle: (show = undefined) =>
+    scoreModalToggle: (show) =>
       set((state) => {
         if (show === undefined) {
           return {
