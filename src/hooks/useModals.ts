@@ -7,6 +7,8 @@ interface ModalStore {
   hideScoreModal: () => void
   showNewGameModal: () => void
   hideNewGameModal: () => void
+  showAlertModal: () => void
+  hideAlertModal: () => void
 }
 
 export const useModals = create<ModalStore>((set) => {
@@ -26,6 +28,14 @@ export const useModals = create<ModalStore>((set) => {
         newGameModal: true
       })),
     hideNewGameModal: () =>
+      set(() => ({
+        newGameModal: false
+      })),
+    showAlertModal: () =>
+      set(() => ({
+        newGameModal: true
+      })),
+    hideAlertModal: () =>
       set(() => ({
         newGameModal: false
       }))

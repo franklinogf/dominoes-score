@@ -3,7 +3,6 @@ import { useTeams } from '../hooks/useTeams'
 import { useModals } from '../hooks/useModals'
 import {
   Button,
-  Grid,
   Input,
   Modal,
   ModalBody,
@@ -25,8 +24,6 @@ export function NewGameModal() {
   }
   return (
     <Modal
-      closeOnEsc={false}
-      closeOnOverlayClick={false}
       isCentered
       size='sm'
       isOpen={newGameModal}
@@ -34,28 +31,26 @@ export function NewGameModal() {
     >
       <ModalOverlay />
       <ModalContent>
-        <ModalHeader textAlign='center'>Nombres de los equipos.</ModalHeader>
+        <ModalHeader className='text-center'>
+          Nombres de los equipos.
+        </ModalHeader>
         <ModalBody>
-          <Grid gap={2}>
-            <Input
-              variant='filled'
-              textAlign='center'
-              placeholder='Equipo 1'
-              value={team1Name}
-              onChange={(e) => {
-                setTeam1Name(e.target.value)
-              }}
-            />
-            <Input
-              variant='filled'
-              textAlign='center'
-              placeholder='Equipo 2'
-              value={team2Name}
-              onChange={(e) => {
-                setTeam2Name(e.target.value)
-              }}
-            />
-          </Grid>
+          <Input
+            className='text-center my-2'
+            placeholder='Equipo 1'
+            value={team1Name}
+            onChange={(e) => {
+              setTeam1Name(e.target.value)
+            }}
+          />
+          <Input
+            className='text-center'
+            placeholder='Equipo 2'
+            value={team2Name}
+            onChange={(e) => {
+              setTeam2Name(e.target.value)
+            }}
+          />
         </ModalBody>
         <ModalFooter className='!justify-center'>
           <Button
