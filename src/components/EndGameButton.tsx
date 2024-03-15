@@ -7,7 +7,8 @@ import {
   PopoverCloseButton,
   Button,
   PopoverFooter,
-  ButtonGroup
+  ButtonGroup,
+  Portal
 } from '@chakra-ui/react'
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
@@ -32,31 +33,37 @@ export function EndGameButton() {
               Finalizar juego?
             </Button>
           </PopoverTrigger>
-          <PopoverContent>
-            <PopoverArrow />
-            <PopoverCloseButton />
-            <PopoverBody>Esta seguro que quieres finalizar el juego?</PopoverBody>
-            <PopoverFooter>
-              <ButtonGroup gap={2}>
-                <Button
-                  variant='outline'
-                  colorScheme='red'
-                  size='xs'
-                  onClick={handleEndGame}
+          <Portal>
+            <PopoverContent>
+              <PopoverArrow />
+              <PopoverCloseButton />
+              <PopoverBody>Esta seguro que quieres finalizar el juego?</PopoverBody>
+              <PopoverFooter>
+                <ButtonGroup
+                  display='flex'
+                  justifyContent='center'
+                  gap={2}
                 >
-                  Aceptar
-                </Button>
+                  <Button
+                    variant='outline'
+                    colorScheme='red'
+                    size='xs'
+                    onClick={handleEndGame}
+                  >
+                    Aceptar
+                  </Button>
 
-                <Button
-                  size='xs'
-                  variant='outline'
-                  onClick={onClose}
-                >
-                  Cancel
-                </Button>
-              </ButtonGroup>
-            </PopoverFooter>
-          </PopoverContent>
+                  <Button
+                    size='xs'
+                    variant='outline'
+                    onClick={onClose}
+                  >
+                    Cancel
+                  </Button>
+                </ButtonGroup>
+              </PopoverFooter>
+            </PopoverContent>
+          </Portal>
         </>
       )}
     </Popover>
