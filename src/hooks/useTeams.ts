@@ -1,21 +1,25 @@
 import { create } from 'zustand'
 import { Team, Teams, TeamsKeys } from '../types/teams'
 
-interface TeamsStore extends Teams {
-  startGame: (team1Name: Team['name'], team2Name: Team['name']) => void
-  endGame: () => void
-  addScore: (score: number) => void
-  setTeamToUpdate: (team: TeamsKeys) => void
-  setScoreIndexToUpdate: (index: number | undefined) => void
-  editScore: (newScore: number) => void
-  deleteScore: () => void
+interface State extends Teams {
   limit: number
-  scoreIndexToUpdate: number | undefined
+  scoreIndexToUpdate?: number
   gameEnded: boolean
   teamToUpdate: TeamsKeys
 }
 
-const initialValues = {
+type Action = {
+  startGame: (team1Name: Team['name'], team2Name: Team['name']) => void
+  endGame: () => void
+  addScore: (score: Team['scores'][number]) => void
+  setTeamToUpdate: (team: TeamsKeys) => void
+  setScoreIndexToUpdate: (index: State['scoreIndexToUpdate']) => void
+  editScore: (newScore: Team['scores'][number]) => void
+  deleteScore: () => void
+}
+type TeamsStore = State & Action
+
+const initialValues: Omit<State, 'limit'> = {
   team1: {
     name: '',
     scores: []
@@ -24,7 +28,9 @@ const initialValues = {
     name: '',
     scores: []
   },
-  gameEnded: false
+  gameEnded: false,
+  teamToUpdate: 'team1',
+  scoreIndexToUpdate: undefined
 }
 export function sumScores(scores: number[]) {
   return scores.reduce((a, b) => a + b, 0)
@@ -32,8 +38,6 @@ export function sumScores(scores: number[]) {
 export const useTeams = create<TeamsStore>((set) => ({
   ...initialValues,
   limit: 200,
-  teamToUpdate: 'team1',
-  scoreIndexToUpdate: undefined,
   setTeamToUpdate: (team) =>
     set(() => ({
       teamToUpdate: team

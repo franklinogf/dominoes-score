@@ -1,11 +1,13 @@
 import { create } from 'zustand'
-
-interface ModalStore {
+type State = {
   scoreModal: boolean
   newGameModal: boolean
-  newGameModalToggle: (show?: boolean) => void
-  scoreModalToggle: (show?: boolean) => void
 }
+type Action = {
+  newGameModalToggle: (show?: State['newGameModal']) => void
+  scoreModalToggle: (show?: State['scoreModal']) => void
+}
+type ModalStore = State & Action
 
 export const useModals = create<ModalStore>((set) => {
   return {
