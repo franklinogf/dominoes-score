@@ -18,7 +18,7 @@ import {
 
 export function NewGameModal() {
   const { startGame } = useTeams()
-  const { newGameModal, hideNewGameModal } = useModals()
+  const { newGameModal, newGameModalToggle } = useModals()
   const [team1Name, setTeam1Name] = useState('')
   const [team2Name, setTeam2Name] = useState('')
 
@@ -26,14 +26,14 @@ export function NewGameModal() {
     e.preventDefault()
     if (team1Name === '' || team2Name === '') return
     startGame(team1Name, team2Name)
-    hideNewGameModal()
+    newGameModalToggle(false)
   }
   return (
     <Modal
       isCentered
       size='sm'
       isOpen={newGameModal}
-      onClose={hideNewGameModal}
+      onClose={newGameModalToggle}
     >
       <ModalOverlay />
       <ModalContent>

@@ -19,7 +19,7 @@ import { useTeams } from '../hooks/useTeams'
 export function ScoreModal() {
   const { addScore, scoreIndexToUpdate, editScore, setScoreIndexToUpdate, deleteScore, limit } =
     useTeams()
-  const { newScoreModal, hideScoreModal } = useModals()
+  const { scoreModal, scoreModalToggle } = useModals()
 
   function handleFormSubmit(e: React.FormEvent) {
     e.preventDefault()
@@ -35,7 +35,7 @@ export function ScoreModal() {
     handleButtonCancel()
   }
   function handleButtonCancel() {
-    hideScoreModal()
+    scoreModalToggle(false)
     setScoreIndexToUpdate(undefined)
   }
   function handleDelete() {
@@ -46,7 +46,7 @@ export function ScoreModal() {
     <Modal
       isCentered
       size='sm'
-      isOpen={newScoreModal}
+      isOpen={scoreModal}
       onClose={handleButtonCancel}
     >
       <ModalOverlay />

@@ -1,43 +1,33 @@
 import { create } from 'zustand'
 
 interface ModalStore {
-  newScoreModal: boolean
+  scoreModal: boolean
   newGameModal: boolean
-  showScoreModal: () => void
-  hideScoreModal: () => void
-  showNewGameModal: () => void
-  hideNewGameModal: () => void
-  showAlertModal: () => void
-  hideAlertModal: () => void
+  newGameModalToggle: (show?: boolean) => void
+  scoreModalToggle: (show?: boolean) => void
 }
 
 export const useModals = create<ModalStore>((set) => {
   return {
-    newScoreModal: false,
+    scoreModal: false,
     newGameModal: true,
-    showScoreModal: () =>
-      set(() => ({
-        newScoreModal: true
-      })),
-    hideScoreModal: () =>
-      set(() => ({
-        newScoreModal: false
-      })),
-    showNewGameModal: () =>
-      set(() => ({
-        newGameModal: true
-      })),
-    hideNewGameModal: () =>
-      set(() => ({
-        newGameModal: false
-      })),
-    showAlertModal: () =>
-      set(() => ({
-        newGameModal: true
-      })),
-    hideAlertModal: () =>
-      set(() => ({
-        newGameModal: false
-      }))
+    newGameModalToggle: (show) =>
+      set((state) => {
+        if (show === undefined) {
+          return {
+            newGameModal: !state.newGameModal
+          }
+        }
+        return { newGameModal: show }
+      }),
+    scoreModalToggle: (show = undefined) =>
+      set((state) => {
+        if (show === undefined) {
+          return {
+            scoreModal: !state.scoreModal
+          }
+        }
+        return { scoreModal: show }
+      })
   }
 })

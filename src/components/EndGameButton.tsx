@@ -14,12 +14,12 @@ import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 
 export function EndGameButton() {
-  const { showNewGameModal } = useModals()
+  const { newGameModalToggle } = useModals()
   const { endGame } = useTeams()
 
   function handleEndGame() {
     endGame()
-    showNewGameModal()
+    newGameModalToggle(true)
   }
   return (
     <Popover>
