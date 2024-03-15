@@ -1,28 +1,17 @@
+import { EndGameButton } from '../components/EndGameButton'
 import { useModals } from '../hooks/useModals'
 import { useTeams } from '../hooks/useTeams'
 import { TeamsKeys } from '../types/teams'
 import { Button } from '@chakra-ui/react'
 
 export function Header() {
-  const { team1, team2, endGame } = useTeams()
-  const { showNewGameModal } = useModals()
+  const { team1, team2 } = useTeams()
 
-  function handleEndGame() {
-    endGame()
-    showNewGameModal()
-  }
   return (
     <header className='pt-5 sticky top-0 bg-slate-500/90'>
       <div className='text-center mb-5'>
-        <Button
-          colorScheme='red'
-          onClick={handleEndGame}
-          size='xs'
-        >
-          Finalizar juego?
-        </Button>
+        <EndGameButton />
       </div>
-
       <div className='flex justify-around'>
         <Name
           teamIndex='team1'
