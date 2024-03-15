@@ -34,7 +34,7 @@ export function NewGameModal() {
         <ModalHeader className='text-center'>
           Nombres de los equipos.
         </ModalHeader>
-        <ModalBody className='my-5'>
+        <ModalBody>
           <Input
             className='text-center my-2'
             placeholder='Equipo 1'
