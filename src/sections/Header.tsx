@@ -5,7 +5,8 @@ import { TeamsKeys } from '../types/teams'
 import { Button } from '@chakra-ui/react'
 
 export function Header() {
-  const { team1, team2 } = useTeams()
+  const { teams } = useTeams()
+  const teamsKeys: TeamsKeys[] = Object.keys(teams) as TeamsKeys[]
 
   return (
     <header className='pt-2 sticky top-0 bg-slate-500/90'>
@@ -13,14 +14,13 @@ export function Header() {
         <EndGameButton />
       </div>
       <div className='flex justify-around'>
-        <Name
-          teamIndex='team1'
-          label={team1.name}
-        />
-        <Name
-          teamIndex='team2'
-          label={team2.name}
-        />
+        {teamsKeys.map((key) => (
+          <Name
+            key={key}
+            teamIndex={key}
+            label={teams[key].name}
+          />
+        ))}
       </div>
     </header>
   )
@@ -28,16 +28,18 @@ export function Header() {
 
 function Name({ label, teamIndex }: { label: string; teamIndex: TeamsKeys }) {
   const { scoreModalToggle } = useModals()
-  const { setTeamToUpdate, gameEnded } = useTeams()
+  const { setTeamToUpdate, gameEnded, winner } = useTeams()
   function handleButtonClick() {
-    if (gameEnded) return
     setTeamToUpdate(teamIndex)
     scoreModalToggle(true)
   }
 
   return (
     <Button
-      variant='ghost'
+      isDisabled={gameEnded}
+      colorScheme={winner === teamIndex ? 'green' : 'gray'}
+      bgColor={winner === teamIndex ? 'green.500' : 'gray.300'}
+      textColor={winner === teamIndex ? 'white' : 'black'}
       onClick={handleButtonClick}
     >
       {label}
