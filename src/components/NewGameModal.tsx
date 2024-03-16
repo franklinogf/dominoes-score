@@ -30,6 +30,8 @@ export function NewGameModal() {
   }
   return (
     <Modal
+      closeOnEsc={false}
+      closeOnOverlayClick={false}
       isCentered
       size='sm'
       isOpen={newGameModal}
@@ -43,6 +45,7 @@ export function NewGameModal() {
             <Stack>
               <InputGroup>
                 <Input
+                  tabIndex={1}
                   variant='filled'
                   textAlign='center'
                   placeholder='Equipo 1'
@@ -63,6 +66,7 @@ export function NewGameModal() {
               </InputGroup>
               <InputGroup>
                 <Input
+                  tabIndex={2}
                   variant='filled'
                   textAlign='center'
                   placeholder='Equipo 2'
