@@ -13,11 +13,12 @@ interface State {
 type Action = {
   startGame: (team1Name: Team['name'], team2Name: Team['name']) => void
   endGame: () => void
-  addScore: (score: Team['scores'][number]) => void
+  addScore: (newScore: Team['scores'][number]) => void
   setTeamToUpdate: (team: TeamsKeys) => void
   setScoreIndexToUpdate: (index: State['scoreIndexToUpdate']) => void
   editScore: (newScore: Team['scores'][number]) => void
   deleteScore: () => void
+  setWinningTeam: () => void
 }
 type TeamsStore = State & Action
 
@@ -38,7 +39,7 @@ const initialValues: Omit<State, 'limit'> = {
   scoreIndexToUpdate: undefined
 }
 
-export const useTeams = create<TeamsStore>((set) => ({
+export const useTeams = create<TeamsStore>((set, get) => ({
   ...initialValues,
   limit: 200,
   setTeamToUpdate: (team) => set({ teamToUpdate: team }),
@@ -51,14 +52,10 @@ export const useTeams = create<TeamsStore>((set) => ({
       }
     }),
   endGame: () => set(initialValues),
-  addScore: (score) =>
+  addScore: (newScore) => {
     set((state) => {
       const team = state.teamToUpdate
-      const scores = [...state.teams[team].scores, score]
-      const sumOfScores = sumScores(scores)
-      const theOtherTeam: State['winner'] = team === 'team1' ? 'team2' : 'team1'
-      const scores2 = state.teams[theOtherTeam].scores
-
+      const scores = [...state.teams[team].scores, newScore]
       return {
         teams: {
           ...state.teams,
@@ -66,24 +63,17 @@ export const useTeams = create<TeamsStore>((set) => ({
             ...state.teams[team],
             scores
           }
-        },
-        scoreIndexToUpdate: undefined,
-        gameEnded: sumOfScores >= state.limit,
-        winner: checkWinningTeam({
-          [team]: scores,
-          [theOtherTeam]: scores2
-        })
+        }
       }
-    }),
-  editScore: (newScore) =>
+    })
+    get().setWinningTeam()
+  },
+  editScore: (newScore) => {
     set((state) => {
       if (state.scoreIndexToUpdate === undefined) return {}
       const team = state.teamToUpdate
       const scores = state.teams[team].scores
       scores[state.scoreIndexToUpdate] = newScore
-      const sumOfScores = sumScores(scores)
-      const theOtherTeam = team === 'team1' ? 'team2' : 'team1'
-      const scores2 = state.teams[theOtherTeam].scores
 
       return {
         teams: {
@@ -92,24 +82,18 @@ export const useTeams = create<TeamsStore>((set) => ({
             ...state.teams[team],
             scores
           }
-        },
-        gameEnded: sumOfScores >= state.limit,
-        scoreIndexToUpdate: undefined,
-        winner: checkWinningTeam({
-          [team]: scores,
-          [theOtherTeam]: scores2
-        })
+        }
       }
-    }),
-  deleteScore: () =>
+    })
+    get().setWinningTeam()
+  },
+  deleteScore: () => {
     set((state) => {
       if (state.scoreIndexToUpdate === undefined) return {}
       const team = state.teamToUpdate
       const scores = state.teams[team].scores
       scores.splice(state.scoreIndexToUpdate, 1)
-      const sumOfScores = sumScores(scores)
-      const theOtherTeam = team === 'team1' ? 'team2' : 'team1'
-      const scores2 = state.teams[theOtherTeam].scores
+
       return {
         teams: {
           ...state.teams,
@@ -117,30 +101,22 @@ export const useTeams = create<TeamsStore>((set) => ({
             ...state.teams[team],
             scores
           }
-        },
-        gameEnded: sumOfScores >= state.limit,
-        scoreIndexToUpdate: undefined,
-        winner: checkWinningTeam({
-          [team]: scores,
-          [theOtherTeam]: scores2
-        })
+        }
       }
     })
+    get().setWinningTeam()
+  },
+  setWinningTeam: () =>
+    set((state) => {
+      const scores1 = sumScores(state.teams.team1.scores)
+      const scores2 = sumScores(state.teams.team2.scores)
+      const winner = scores1 === scores2 ? undefined : scores1 > scores2 ? 'team1' : 'team2'
+      const gameEnded = scores1 >= state.limit || scores2 >= state.limit ? true : false
+
+      return { winner, gameEnded, scoreIndexToUpdate: undefined }
+    })
 }))
-function checkWinningTeam({
-  team1,
-  team2
-}: {
-  team1?: Team['scores']
-  team2?: Team['scores']
-}): State['winner'] {
-  if (!team1 || !team2) return
-  const scores1 = sumScores(team1)
-  const scores2 = sumScores(team2)
-  if (scores1 === scores2) return
-  if (scores1 > scores2) return 'team1'
-  return 'team2'
-}
+
 export function sumScores(scores: Team['scores']) {
   return scores.reduce((a, b) => a + b, 0)
 }
