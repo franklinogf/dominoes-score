@@ -4,7 +4,7 @@ import { TeamsKeys } from '../types/teams'
 import { Box, Button, Grid, GridItem, VStack } from '@chakra-ui/react'
 
 export function ScoreList() {
-  const { team1, team2 } = useTeams()
+  const { teams } = useTeams()
   return (
     <Grid
       as='section'
@@ -13,11 +13,11 @@ export function ScoreList() {
       gap={0}
     >
       <List
-        scoreList={team1.scores}
+        scoreList={teams.team1.scores}
         team='team1'
       />
       <List
-        scoreList={team2.scores}
+        scoreList={teams.team2.scores}
         team='team2'
       />
     </Grid>
@@ -25,7 +25,7 @@ export function ScoreList() {
 }
 
 function List({ scoreList, team }: { scoreList: number[]; team: TeamsKeys }) {
-  const { setScoreIndexToUpdate, setTeamToUpdate } = useTeams()
+  const { setScoreIndexToUpdate, setTeamToUpdate, gameEnded } = useTeams()
   const { scoreModalToggle } = useModals()
   function handleEdit(index: number) {
     setScoreIndexToUpdate(index)
@@ -42,14 +42,15 @@ function List({ scoreList, team }: { scoreList: number[]; team: TeamsKeys }) {
         {scoreList.map((score, index) => {
           return (
             <Box
+              key={team + index}
               w='100%'
               p={2}
             >
               <Button
+                isDisabled={index !== scoreList.length - 1 && gameEnded}
                 size={'sm'}
                 w='100%'
                 variant='ghost'
-                key={team + index}
                 onClick={() => handleEdit(index)}
               >
                 {score}
