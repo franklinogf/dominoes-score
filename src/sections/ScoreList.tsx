@@ -50,7 +50,9 @@ function List({ scoreList, team }: { scoreList: number[]; team: TeamsKeys }) {
                 isDisabled={index !== scoreList.length - 1 && gameEnded}
                 size={'sm'}
                 w='100%'
-                variant='ghost'
+                colorScheme='gray'
+                textColor={'white'}
+                variant={'link'}
                 onClick={() => handleEdit(index)}
               >
                 {score}
