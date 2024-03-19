@@ -9,7 +9,10 @@ export function Header() {
   const teamsKeys: TeamsKeys[] = Object.keys(teams) as TeamsKeys[]
 
   return (
-    <header className='pt-2 sticky top-0 bg-slate-500/90'>
+    <header
+      id='header'
+      className='pt-2 sticky top-0 bg-neutral-800/20'
+    >
       <div className='text-center mb-1'>
         <EndGameButton />
       </div>
