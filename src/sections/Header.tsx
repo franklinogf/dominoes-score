@@ -11,7 +11,7 @@ export function Header() {
   return (
     <header
       id='header'
-      className='pt-2 sticky top-0 bg-neutral-800/20'
+      className='pt-2 sticky top-0 bg-gradient-to-b from-neutral-800 z-10 pb-2'
     >
       <div className='text-center mb-1'>
         <EndGameButton />
